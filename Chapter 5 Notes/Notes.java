@@ -88,4 +88,70 @@ public class Notes
         // don't have to use an if statement when working with a boolean
         // return ( Math.abs( num1 - num2 ) < EPSILON );
     }
+    
+    public static void stringExample()
+    {
+        Scanner s = new Scanner( System.in );
+        System.out.println( "Enter two strings" );
+        String str1 = s.next();
+        String str2 = s.next();
+        
+        /*
+         * The equality operator (==) returns true if the two values contain the same value.
+         *      For objects, including Strings, this means that they contain the same reference. That is,
+         *      they contain the same object in the computer's memory, not that they have the same
+         *      sequence of characters.
+         */
+        if (str1 == str2)
+        {
+            System.out.println("string references are equal.");
+        }
+        else
+        {
+            System.out.println("strings references are not equal.");
+        }
+        
+        if (str1.equals( str2 ))
+        {
+            System.out.println("strings are equal.");
+        }
+        else
+        {
+            System.out.println("strings are not equal.");
+        }
+        
+        /*
+         * We will determine which string comes first lexographically using the compareTo method
+         *      of the String class.
+         *      
+         * compareTo returns an int:
+         *      0: if the strings are equal (same sequence of characters)
+         *      <0: if str1 < str2 lexographically
+         *      >0: if str1 > str2 lexographically
+         */
+        
+        int result = str1.compareTo(str2);
+        String firstStr = null;
+        
+        if (result < 0)
+        {
+            firstStr = str1;
+        }
+        else if (result > 0)
+        {
+            firstStr = str2;
+        }
+        
+        if (firstStr != null)
+        {
+            System.out.println("The first String is: " + firstStr );
+            
+            System.out.println("Its length is: " + firstStr.length());
+        }
+        else
+        {
+            System.out.println("Strings are equal.");
+        }
+    }
+    
 }
