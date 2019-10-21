@@ -16,18 +16,17 @@ public class CircleOverlap
 
       // Your work goes here
       
-      if ((radius1 + radius2) < (xcenter2 - xcenter1))
+      if (xcenter1 == xcenter2 && radius1 == radius2)
       {
-          System.out.println("The circles are disjoint.");
+          System.out.println("mutually contained");
       }
-      else if (radius1 == radius2 && xcenter1 == xcenter2)
+      else if (xcenter1 - xcenter2 >= radius1 + radius2)
       {
-          System.out.println("The circles are mutually contained.");
+          System.out.println("disjoint");
       }
-      else if ((radius1 + radius2) >= (xcenter2 - xcenter1))
+      else if (xcenter1 - xcenter2 < radius1 + radius2)
       {
-          System.out.println("The circles overlap.");
+          System.out.println("overlapping");
       }
-      
    }
 }

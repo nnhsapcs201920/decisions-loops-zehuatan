@@ -152,6 +152,27 @@ public class Notes
         {
             System.out.println("Strings are equal.");
         }
+        
+        /*
+         * This is an example of a 'short-circuit'.
+         *      If the left operand is false, the right operand will not be evaluated
+         *      because the AND operation is already false.
+         */
+        
+        if (firstStr != null && firstStr.length() > 3)
+        {
+            System.out.println("The first string has more than 3 characters.");
+        }
+        
+        System.out.print("Enter your two favorite fruits.");
+        if (s.next().equals("kiwi") || s.next().equals("kiwi"))
+        {
+            System.out.println("Kiwi is one of my favorite fruits too!");
+        }
+        
+        System.out.println("Enter your favorite ice cream flavor.");
+        String flavor = s.next();
+        System.out.println("Favorite flavor: " + flavor);
     }
     
 }
