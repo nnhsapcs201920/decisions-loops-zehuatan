@@ -6,7 +6,7 @@ public class Spectrum
     {
         Scanner scan = new Scanner(System.in);
         System.out.print("Please enter a wavelength: ");
-        long wavelength = scan.nextInt();
+        double wavelength = scan.nextDouble();
         if (wavelength > 1e-1)
         {
             System.out.println("Radio Waves: frequency < 3x10^9");
