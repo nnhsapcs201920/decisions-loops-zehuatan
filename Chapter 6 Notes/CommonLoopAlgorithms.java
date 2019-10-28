@@ -10,7 +10,21 @@ public class CommonLoopAlgorithms
     */
   public static double average()
   {
-      return 0;
+      Scanner scan = new Scanner(System.in);
+      double average = 0;
+      double add;
+      int counter = 0;
+      do
+      {
+          add = scan.nextDouble();
+          average *= counter;
+          average += add;
+          counter++;
+          average /= counter;
+      }
+      while (scan.hasNextDouble() == true);
+      
+      return average;
   }
 
    /*
@@ -21,7 +35,19 @@ public class CommonLoopAlgorithms
     */
    public static int countMatches()
    {
-       return 0;
+       Scanner scan = new Scanner(System.in);
+       
+       int counter = 0;
+       do
+       {
+           if (scan.nextDouble() > 100)
+           {
+               counter++;
+           }
+       }
+       while (scan.hasNextDouble() == true);
+       
+       return counter;
    }
 
    /*
@@ -32,7 +58,19 @@ public class CommonLoopAlgorithms
     */
    public static int findFirstMatch()
    {
-       return 0;
+       Scanner scan = new Scanner(System.in);
+       String word = "";
+       int counter = 0;
+       while (word.length() <= 5)
+       {
+           word = scan.next();
+           if (word.length() > 5)
+           {
+               break;
+           }
+           counter++;
+       }
+       return counter;
    }
 
    /*
@@ -44,6 +82,9 @@ public class CommonLoopAlgorithms
     */
    public static int promptUntilMatch()
    {
+       Scanner scan = new Scanner(System.in);
+       
+       
        return 0;
    }
 

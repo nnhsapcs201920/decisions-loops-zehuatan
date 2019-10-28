@@ -69,6 +69,27 @@ public class Notes
         //System.out.println("final value of count: " + count);
     }
     
+    public static void offByOne()
+    {
+        /*
+         * The classic off-by-one error is common with for loops eecuting
+         *      one too many or one too few times.
+         *      
+         *      Carefully stop and ask: should the initial value start at 0 or 1?
+         *                              should the condition be < or <= ?
+         *                              
+         *      Do not just try at random.
+         */
+        // we want to print five "*"
+        for (int i = 0;
+            i <= 5;         //should be i < 5 instead of i <= 5 to fix error
+            i++)
+            {
+                System.out.println("*");
+            }
+        System.out.println("done");
+    }
+    
     public static void doExample()
     {
         /*
