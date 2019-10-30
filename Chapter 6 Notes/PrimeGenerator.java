@@ -7,11 +7,17 @@ public class PrimeGenerator
         this.number = limit;
     }
     
-    public int nextPrime()
+    public int nextPrime(int prime)
     {
-        int counter = 1;
-        // make a parameter for the prime and check if you're going over the limit
-        this.isPrime(counter);
+        int counter = prime;
+        while (counter < this.number)
+        {
+            counter++;
+            if (this.isPrime(counter))
+            {
+                break;
+            }
+        }
         return counter;
     }
     
