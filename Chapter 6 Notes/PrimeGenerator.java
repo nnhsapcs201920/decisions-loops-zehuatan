@@ -23,7 +23,7 @@ public class PrimeGenerator
     
     public boolean isPrime(int potentialPrime)
     {
-        for (int i = 2; i < potentialPrime; i++)
+        for (int i = 2; i < Math.pow(potentialPrime, .5); i++)
         {
             if (potentialPrime % i == 0)
             {
