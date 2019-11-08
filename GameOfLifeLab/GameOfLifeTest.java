@@ -47,12 +47,13 @@ public class GameOfLifeTest
          *  (X: alive; -: dead)
          * 
          *    0 1 2 3 4
-         *  0 - - X - -
-         *  1 - - - - -
-         *  2 X X - - -
-         *  3 - - - - -
+         *  0 - - - - -
+         *  1 - - X - -
+         *  2 - X X X -
+         *  3 - X - - -
          *  4 - - - - -
          *  
+         *  Coordinates to test (row, col): (1, 2), (2, 1), (2, 2), (2, 3), (3, 1)
          */
         
         GameOfLife game = new GameOfLife();
@@ -85,7 +86,31 @@ public class GameOfLifeTest
     @Test
     public void testFinalState()
     {
-        /* verify that the actual pattern matches the expected pattern after 3 generations         *  
+        /* verify that the actual pattern matches the expected pattern after 3 generations         
+         *  
+         *    0 1 2 3 4
+         *  0 - - - - -
+         *  1 - - X - -
+         *  2 - X X X -
+         *  3 - X - - -
+         *  4 - - - - -
+         * 
+         *   0 1 2 3 4
+         *  0 - - - - -
+         *  1 - X X X -
+         *  2 - X - X -
+         *  3 - X - - -
+         *  4 - - - - -
+         *  
+         *    0 1 2 3 4
+         *  0 - - X - -
+         *  1 - X - X -
+         *  2 X X - X -
+         *  3 - - X - -
+         *  4 - - - - -
+         *  
+         *  Coordinates to test (row, col): (0, 2), (1, 1), (1, 3), (2, 0), (2, 1), (2, 3), (3, 2)
+         *  
          */
         
         // ...

@@ -1,5 +1,14 @@
 Game of Life Lab
 
+* My Requirements
+* 30 x 30 grid
+* live cells = t-piece
+* dead cells = misdrop
+* pattern = f-pentomino
+* game runs forever until user stops
+* time interval = .1 second
+* 
+
 # Introduction
 # 
 The goal of this lab is to apply your understanding of decision and
