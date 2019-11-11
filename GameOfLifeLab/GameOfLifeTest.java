@@ -46,20 +46,23 @@ public class GameOfLifeTest
         /* expected pattern for initial state
          *  (X: alive; -: dead)
          * 
-         *    0 1 2 3 4
-         *  0 - - - - -
-         *  1 - - X - -
-         *  2 - X X X -
-         *  3 - X - - -
-         *  4 - - - - -
+         *    0 1 2 3 4 5
+         *  0 - - - - - -
+         *  1 - - X - - -
+         *  2 - X X X - -
+         *  3 - X - - - -
+         *  4 - - - - - -
+         *  5 - - - - - -
          *  
          *  Coordinates to test (row, col): (1, 2), (2, 1), (2, 2), (2, 3), (3, 1)
          */
         
-        GameOfLife game = new GameOfLife();
+        final int ROWS = 6;
+        final int COLS = 6;
+        
+        GameOfLife game = new GameOfLife(ROWS, COLS);
         game.populateGame();
-        final int ROWS = game.getNumRows();
-        final int COLS = game.getNumCols();
+        
 
         for(int row = 0; row < ROWS; row++)
         {
@@ -90,26 +93,29 @@ public class GameOfLifeTest
     {
         /* verify that the actual pattern matches the expected pattern after 3 generations         
          *  
-         *    0 1 2 3 4
-         *  0 - - - - -
-         *  1 - - X - -
-         *  2 - X X X -
-         *  3 - X - - -
-         *  4 - - - - -
-         * 
-         *   0 1 2 3 4
-         *  0 - - - - -
-         *  1 - X X X -
-         *  2 - X - X -
-         *  3 - X - - -
-         *  4 - - - - -
+         *    0 1 2 3 4 5
+         *  0 - - - - - -
+         *  1 - - X - - -
+         *  2 - X X X - -
+         *  3 - X - - - -
+         *  4 - - - - - -
+         *  5 - - - - - -
          *  
-         *    0 1 2 3 4
-         *  0 - - X - -
-         *  1 - X - X -
-         *  2 X X - X -
-         *  3 - - X - -
-         *  4 - - - - -
+         *    0 1 2 3 4 5
+         *  0 - - - - - -
+         *  1 - X X X - -
+         *  2 - X - X - -
+         *  3 - X - - - -
+         *  4 - - - - - -
+         *  5 - - - - - -
+         *  
+         *    0 1 2 3 4 5
+         *  0 - - X - - -
+         *  1 - X - X - -
+         *  2 X X - X - -
+         *  3 - - X - - -
+         *  4 - - - - - -
+         *  5 - - - - - -
          *  
          *  Coordinates to test (row, col): (0, 2), (1, 1), (1, 3), (2, 0), (2, 1), (2, 3), (3, 2)
          *  
@@ -117,10 +123,12 @@ public class GameOfLifeTest
         
         // ...
         
-        GameOfLife game = new GameOfLife();
+        
+        
+        final int ROWS = 6;
+        final int COLS = 6;
+        GameOfLife game = new GameOfLife(ROWS, COLS);
         game.populateGame();
-        final int ROWS = game.getNumRows();
-        final int COLS = game.getNumCols();
         
         game.createNextGeneration();
         game.createNextGeneration();
