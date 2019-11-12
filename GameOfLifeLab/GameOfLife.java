@@ -4,6 +4,7 @@ import info.gridworld.actor.Rock;
 import info.gridworld.grid.Grid;
 import info.gridworld.grid.BoundedGrid;
 import info.gridworld.grid.Location;
+import info.gridworld.actor.Bug;
 
 /**
  * Game of Life starter code. Demonstrates how to create and populate the game using the GridWorld framework.
@@ -16,8 +17,8 @@ public class GameOfLife
 {
     // the world comprised of the grid that displays the graphics for the game
     private ActorWorld world;
-    
-    
+    private Rock rock;
+    private Bug bug;
     /**
      * Default constructor for objects of class GameOfLife
      * 
@@ -28,11 +29,13 @@ public class GameOfLife
     {
         // create the grid, of the specified size, that contains Actors
         BoundedGrid<Actor> grid = new BoundedGrid<Actor>(initialRows, initialCols);
-        
+
         // create a world based on the grid
         world = new ActorWorld(grid);
+        rock = new Rock();
+        bug = new Bug();
     }
-    
+
     /**
      * Creates the actors and inserts them into their initial starting positions in the grid
      *
@@ -52,28 +55,26 @@ public class GameOfLife
         // the grid of Actors that maintains the state of the game
         //  (alive cells contains actors; dead cells do not)
         Grid<Actor> grid = world.getGrid();
-        
+
         // create and add rocks (a type of Actor) to the three intial locations
-        Rock rock1 = new Rock();
+
         Location loc1 = new Location(Y1, X1);
-        grid.put(loc1, rock1);
-        
-        Rock rock2 = new Rock();
+        grid.put(loc1, rock);
+
         Location loc2 = new Location(Y2, X2);
-        grid.put(loc2, rock2);
-        
-        Rock rock3 = new Rock();
+        grid.put(loc2, rock);
+
         Location loc3 = new Location(Y3, X3);
-        grid.put(loc3, rock3);
-        
-        Rock rock4 = new Rock();
+        grid.put(loc3, rock);
+
         Location loc4 = new Location(Y4, X4);
-        grid.put(loc4, rock4);
-        
-        Rock rock5 = new Rock();
+        grid.put(loc4, rock);
+
         Location loc5 = new Location(Y5, X5);
-        grid.put(loc5, rock5);
+        grid.put(loc5, rock);
         
+        //nested for loop to fill all non-rock spaces with bugs
+
         // display the newly constructed and populated world
         world.show();
     }
@@ -91,17 +92,18 @@ public class GameOfLife
         /** You will need to read the documentation for the World, Grid, and Location classes
          *      in order to implement the Game of Life algorithm and leverage the GridWorld framework.
          */
-        
+
         // create the grid, of the specified size, that contains Actors
         Grid<Actor> grid = world.getGrid();
+
         BoundedGrid<Actor> newGrid = new BoundedGrid<Actor>(grid.getNumRows(), grid.getNumCols());
         ActorWorld newWorld = new ActorWorld(newGrid);
         /*
          * !!! insert your Game of Life algorithm here...
          */ 
-        
+
         // put into a new grid, not the current one
-        
+
         for(int row = 0; row < grid.getNumRows(); row++)
         {
             for(int col = 0; col < grid.getNumCols(); col++)
@@ -112,35 +114,50 @@ public class GameOfLife
                  * 3. do a switch/if statement for each case
                  */
                 Location coordinate = new Location(row, col);
-                Rock rock = new Rock();
-                
-                if (grid.get(coordinate) != null)
+                int rockCounter = 0;
+
+                //counting the rocks at that location
+                for (int i = 0; i <= grid.getNeighbors(coordinate).size() - 1; i++)
                 {
-                    if (grid.getOccupiedAdjacentLocations(coordinate).size() < 2)
+                    if (grid.getNeighbors(coordinate).get(i) == rock)
                     {
-                        newGrid.remove(coordinate);
+                        rockCounter++;
                     }
-                    else if (grid.getOccupiedAdjacentLocations(coordinate).size() > 3)
+                }
+                //algorithm
+
+                if (grid.get(coordinate) == rock)
+                {
+
+                    //count the number of rocks around it and do the algorithm that way instead
+                    if (rockCounter == 2 || rockCounter == 3)
                     {
                         newGrid.put(coordinate, rock);
                     }
+                    else
+                    {
+                        newGrid.put(coordinate, bug);
+                    }
                 }
-                else if (grid.get(coordinate) == null)
+                else if (grid.get(coordinate) == bug)
                 {
-                    if (grid.getOccupiedAdjacentLocations(coordinate).size() == 3)
+                    if (rockCounter == 3)
                     {
                         newGrid.put(coordinate, rock);
                     }
+                    else
+                    {
+                        newGrid.put(coordinate, bug);
+                    }
                 }
-                
-                
+
             }
         }
-        
+
         world = newWorld;
-        grid = newGrid;
+        world.show();
     }
-    
+
     /**
      * Returns the actor at the specified row and column. Intended to be used for unit testing.
      *
@@ -165,7 +182,7 @@ public class GameOfLife
     {
         return this.world.getGrid().getNumRows();
     }
-    
+
     /**
      * Returns the number of columns in the game board
      *
@@ -175,8 +192,7 @@ public class GameOfLife
     {
         return this.world.getGrid().getNumCols();
     }
-    
-    
+
     /**
      * Creates an instance of this class. Provides convenient execution.
      *
@@ -184,21 +200,21 @@ public class GameOfLife
     public static void main(String[] args) throws InterruptedException
     {
         GameOfLife game = new GameOfLife(6, 6);
-        
+
         // populate the game
         game.populateGame();
-        
+
         /*
          * !!! Create a loop to repeatedly invoke the createNextGeneration method.
          *      You can have your program pause between each invocation:
          *          Thread.sleep(1000); // sleep 1000 milliseconds (1 second)
          */ 
-        
+
         do
         {
             game.createNextGeneration();
-            Thread.sleep(100);
-            
+            Thread.sleep(1000);
+
         }
         while (true);
     }
