@@ -17,8 +17,8 @@ public class GameOfLife
 {
     // the world comprised of the grid that displays the graphics for the game
     private ActorWorld world;
-    private Rock rock;
-    private Bug bug;
+    public static Rock rock;
+    public static Bug bug;
     /**
      * Default constructor for objects of class GameOfLife
      * 
@@ -74,6 +74,20 @@ public class GameOfLife
         grid.put(loc5, rock);
         
         //nested for loop to fill all non-rock spaces with bugs
+        
+        
+        
+        for (int row = 0; row < grid.getNumRows(); row++)
+        {
+            for (int col = 0; col < grid.getNumRows(); col++)
+            {
+                Location coordinate = new Location(row, col);
+                if (grid.get(coordinate) != rock)
+                {
+                    grid.put(coordinate, bug);
+                }
+            }
+        }
 
         // display the newly constructed and populated world
         world.show();
@@ -199,7 +213,7 @@ public class GameOfLife
      */
     public static void main(String[] args) throws InterruptedException
     {
-        GameOfLife game = new GameOfLife(6, 6);
+        GameOfLife game = new GameOfLife(30, 30);
 
         // populate the game
         game.populateGame();
@@ -213,7 +227,7 @@ public class GameOfLife
         do
         {
             game.createNextGeneration();
-            Thread.sleep(1000);
+            Thread.sleep(100);
 
         }
         while (true);

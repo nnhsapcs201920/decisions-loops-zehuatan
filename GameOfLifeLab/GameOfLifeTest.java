@@ -68,21 +68,21 @@ public class GameOfLifeTest
         {
             for(int col = 0; col < COLS; col++)
             {
-                // in this example, an alive cell has a non-null actor and a dead cell has a null actor
+                // in this example, an alive cell has a rock and a dead cell has a bug
                 Actor cell = game.getActor(row, col);
 
-                // if the cell at the current row and col should be alive, assert that the actor is not null
+                // if the cell at the current row and col should be alive, assert that the actor is rock
                 if(     (row == 1 && col == 2) ||
                         (row == 2 && col == 1) ||
                         (row == 2 && col == 2) ||
                         (row == 2 && col == 3) ||
                         (row == 3 && col == 1))
                 {
-                    assertNotNull("expected alive cell at (" + row + ", " + col + ")", cell);
+                    assert cell == GameOfLife.rock;
                 }
-                else // else, the cell should be dead; assert that the actor is null
+                else // else, the cell should be dead; assert that the actor is bug
                 {
-                    assertNull("expected dead cell at (" + row + ", " + col + ")", cell);
+                    assert cell == GameOfLife.bug;
                 }
             }
         }
@@ -137,10 +137,10 @@ public class GameOfLifeTest
         {
             for(int col = 0; col < COLS; col++)
             {
-                // in this example, an alive cell has a non-null actor and a dead cell has a null actor
+                // in this example, an alive cell has a rock and a dead cell has a bug
                 Actor cell = game.getActor(row, col);
 
-                // if the cell at the current row and col should be alive, assert that the actor is not null
+                // if the cell at the current row and col should be alive, assert that the actor is rock
                 if(     (row == 0 && col == 2) ||
                         (row == 1 && col == 1) ||
                         (row == 1 && col == 3) ||
@@ -149,11 +149,11 @@ public class GameOfLifeTest
                         (row == 2 && col == 3) ||
                         (row == 3 && col == 2))
                 {
-                    assertNotNull("expected alive cell at (" + row + ", " + col + ")", cell);
+                    assert cell == GameOfLife.rock;
                 }
-                else // else, the cell should be dead; assert that the actor is null
+                else // else, the cell should be dead; assert that the actor is bug
                 {
-                    assertNull("expected dead cell at (" + row + ", " + col + ")", cell);
+                    assert cell == GameOfLife.bug;
                 }
             }
         }
