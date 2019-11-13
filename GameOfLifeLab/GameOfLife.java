@@ -3,6 +3,7 @@ import info.gridworld.actor.ActorWorld;
 import info.gridworld.actor.Rock;
 import info.gridworld.grid.Grid;
 import info.gridworld.grid.BoundedGrid;
+import info.gridworld.grid.UnboundedGrid;
 import info.gridworld.grid.Location;
 import info.gridworld.actor.Bug;
 
@@ -17,8 +18,8 @@ public class GameOfLife
 {
     // the world comprised of the grid that displays the graphics for the game
     private ActorWorld world;
-    public static Rock rock;
-    public static Bug bug;
+    public static Rock rock = new Rock();
+    public static Bug bug = new Bug();
     /**
      * Default constructor for objects of class GameOfLife
      * 
@@ -32,9 +33,17 @@ public class GameOfLife
 
         // create a world based on the grid
         world = new ActorWorld(grid);
-        rock = new Rock();
-        bug = new Bug();
+        
     }
+    
+    public GameOfLife()
+    {
+        UnboundedGrid<Actor> grid = new UnboundedGrid<Actor>();
+        
+        world = new ActorWorld(grid);
+        
+    }
+    
 
     /**
      * Creates the actors and inserts them into their initial starting positions in the grid
@@ -92,6 +101,30 @@ public class GameOfLife
         // display the newly constructed and populated world
         world.show();
     }
+    
+    public void randomPopulateGame()
+    {
+        Grid<Actor> grid = world.getGrid();
+        
+        for (int row = 0; row < grid.getNumRows(); row++)
+        {
+            for (int col = 0; col < grid.getNumRows(); col++)
+            {
+                Location coordinate = new Location(row, col);
+                double random = Math.random();
+                if (random < .5)
+                {
+                    grid.put(coordinate, rock);
+                }
+                else
+                {
+                    grid.put(coordinate, bug);
+                }
+                
+            }
+        }
+        
+    }
 
     /**
      * Generates the next generation based on the rules of the Game of Life and updates the grid
@@ -130,7 +163,7 @@ public class GameOfLife
                 Location coordinate = new Location(row, col);
                 int rockCounter = 0;
 
-                //counting the rocks at that location
+                //counting the rocks adjacent to that location
                 for (int i = 0; i <= grid.getNeighbors(coordinate).size() - 1; i++)
                 {
                     if (grid.getNeighbors(coordinate).get(i) == rock)
@@ -172,6 +205,91 @@ public class GameOfLife
         world.show();
     }
 
+    /**
+     * Generates the next generation based on the rules of the Game of Life and updates the grid
+     * associated with the world for an unbounded grid
+     *
+     * @pre     the game has been initialized
+     * @post    the world has been populated with a new grid containing the next generation
+     * 
+     */
+    public void createNextGenerationUnbounded()
+    {
+        /** You will need to read the documentation for the World, Grid, and Location classes
+         *      in order to implement the Game of Life algorithm and leverage the GridWorld framework.
+         */
+
+        // create the grid, of the specified size, that contains Actors
+        Grid<Actor> grid = world.getGrid();
+
+        UnboundedGrid<Actor> newGrid = new UnboundedGrid<Actor>();
+        ActorWorld newWorld = new ActorWorld(newGrid);
+        /*
+         * !!! insert your Game of Life algorithm here...
+         */ 
+
+        // put into a new grid, not the current one
+        // check that there are no rocks exposed to the outside - increment rows and columns until you hit empty space
+        // which would return a null actor. Then check along the column/row one less from it for rocks.
+        // The grid should always be a square.
+        
+        
+        // change bounds from 30 to whatever the maximum rows/columns are, given by the previous loop
+        
+        for(int row = 0; row < 30; row++)
+        {
+            for(int col = 0; col < 30; col++)
+            {
+                /*
+                 * 1. check if cell is alive or dead
+                 * 2. check for number of alive cells around using getOccupiedAdjacentLocations
+                 * 3. do a switch/if statement for each case
+                 */
+                Location coordinate = new Location(row, col);
+                int rockCounter = 0;
+
+                //counting the rocks adjacent to that location
+                for (int i = 0; i <= grid.getNeighbors(coordinate).size() - 1; i++)
+                {
+                    if (grid.getNeighbors(coordinate).get(i) == rock)
+                    {
+                        rockCounter++;
+                    }
+                }
+                //algorithm
+
+                if (grid.get(coordinate) == rock)
+                {
+
+                    //count the number of rocks around it and do the algorithm that way instead
+                    if (rockCounter == 2 || rockCounter == 3)
+                    {
+                        newGrid.put(coordinate, rock);
+                    }
+                    else
+                    {
+                        newGrid.put(coordinate, bug);
+                    }
+                }
+                else if (grid.get(coordinate) == bug)
+                {
+                    if (rockCounter == 3)
+                    {
+                        newGrid.put(coordinate, rock);
+                    }
+                    else
+                    {
+                        newGrid.put(coordinate, bug);
+                    }
+                }
+
+            }
+        }
+
+        world = newWorld;
+        world.show();
+    }
+    
     /**
      * Returns the actor at the specified row and column. Intended to be used for unit testing.
      *
@@ -216,7 +334,7 @@ public class GameOfLife
         GameOfLife game = new GameOfLife(30, 30);
 
         // populate the game
-        game.populateGame();
+        game.randomPopulateGame();
 
         /*
          * !!! Create a loop to repeatedly invoke the createNextGeneration method.
@@ -227,7 +345,7 @@ public class GameOfLife
         do
         {
             game.createNextGeneration();
-            Thread.sleep(100);
+            Thread.sleep(1000);
 
         }
         while (true);
