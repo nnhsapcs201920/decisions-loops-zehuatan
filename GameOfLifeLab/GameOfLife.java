@@ -33,17 +33,16 @@ public class GameOfLife
 
         // create a world based on the grid
         world = new ActorWorld(grid);
-        
+
     }
-    
+
     public GameOfLife()
     {
         UnboundedGrid<Actor> grid = new UnboundedGrid<Actor>();
-        
+
         world = new ActorWorld(grid);
-        
+
     }
-    
 
     /**
      * Creates the actors and inserts them into their initial starting positions in the grid
@@ -81,10 +80,9 @@ public class GameOfLife
 
         Location loc5 = new Location(Y5, X5);
         grid.put(loc5, rock);
-        
+
         //nested for loop to fill all non-rock spaces with bugs
-        
-        
+
         
         for (int row = 0; row < grid.getNumRows(); row++)
         {
@@ -101,11 +99,11 @@ public class GameOfLife
         // display the newly constructed and populated world
         world.show();
     }
-    
+
     public void randomPopulateGame()
     {
         Grid<Actor> grid = world.getGrid();
-        
+
         for (int row = 0; row < grid.getNumRows(); row++)
         {
             for (int col = 0; col < grid.getNumRows(); col++)
@@ -120,11 +118,12 @@ public class GameOfLife
                 {
                     grid.put(coordinate, bug);
                 }
-                
+
             }
         }
-        
+
     }
+    
 
     /**
      * Generates the next generation based on the rules of the Game of Life and updates the grid
@@ -231,14 +230,36 @@ public class GameOfLife
         // put into a new grid, not the current one
         // check that there are no rocks exposed to the outside - increment rows and columns until you hit empty space
         // which would return a null actor. Then check along the column/row one less from it for rocks.
-        // The grid should always be a square.
-        
-        
-        // change bounds from 30 to whatever the maximum rows/columns are, given by the previous loop
-        
-        for(int row = 0; row < 30; row++)
+        // The grid should always be a rectangle.
+
+        int maxCols = 0;
+        int maxRows = 0;
+        Location testCoordinate = new Location(0, 0);
+
+        for (int row = 0; grid.get(testCoordinate) != null; row++)
         {
-            for(int col = 0; col < 30; col++)
+            testCoordinate = new Location (row + 1, 0);
+            if (grid.get(testCoordinate.getAdjacentLocation(Location.EAST)) == null && grid.get(testCoordinate) == rock)
+            {
+                maxRows = row + 1;
+            }
+        }
+
+        testCoordinate = new Location(0, 0);
+
+        for (int col = 0; grid.get(testCoordinate) != null; col++)
+        {
+            testCoordinate = new Location (0, col);
+            if (grid.get(testCoordinate.getAdjacentLocation(Location.SOUTH)) == null && grid.get(testCoordinate) == rock)
+            {
+                maxCols = col + 1;
+            }
+        }
+
+        // change bounds from 30 to whatever the maximum rows/columns are, given by the previous loop
+        for(int row = 0; row < maxRows; row++)
+        {
+            for(int col = 0; col < maxCols; col++)
             {
                 /*
                  * 1. check if cell is alive or dead
@@ -271,7 +292,7 @@ public class GameOfLife
                         newGrid.put(coordinate, bug);
                     }
                 }
-                else if (grid.get(coordinate) == bug)
+                else if (grid.get(coordinate) == bug || grid.get(coordinate) == null)
                 {
                     if (rockCounter == 3)
                     {
@@ -289,7 +310,7 @@ public class GameOfLife
         world = newWorld;
         world.show();
     }
-    
+
     /**
      * Returns the actor at the specified row and column. Intended to be used for unit testing.
      *
