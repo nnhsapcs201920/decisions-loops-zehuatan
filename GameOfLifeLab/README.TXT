@@ -2,11 +2,11 @@ Game of Life Lab
 
 * My Requirements
 * 30 x 30 grid
-* live cells = t-piece
-* dead cells = misdrop
+* live cells = rock
+* dead cells = bug
 * pattern = f-pentomino
 * game runs forever until user stops
-* time interval = .1 second
+* time interval = 1 second
 * 
 
 # Introduction
