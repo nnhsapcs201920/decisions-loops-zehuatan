@@ -20,6 +20,8 @@ public class GameOfLife
     private ActorWorld world;
     public static Rock rock = new Rock();
     public static Bug bug = new Bug();
+    private int maximumRows;
+    private int maximumCols;
     /**
      * Default constructor for objects of class GameOfLife
      * 
@@ -32,14 +34,6 @@ public class GameOfLife
         BoundedGrid<Actor> grid = new BoundedGrid<Actor>(initialRows, initialCols);
 
         // create a world based on the grid
-        world = new ActorWorld(grid);
-
-    }
-
-    public GameOfLife()
-    {
-        UnboundedGrid<Actor> grid = new UnboundedGrid<Actor>();
-
         world = new ActorWorld(grid);
 
     }
@@ -83,7 +77,6 @@ public class GameOfLife
 
         //nested for loop to fill all non-rock spaces with bugs
 
-        
         for (int row = 0; row < grid.getNumRows(); row++)
         {
             for (int col = 0; col < grid.getNumRows(); col++)
@@ -104,9 +97,9 @@ public class GameOfLife
     {
         Grid<Actor> grid = world.getGrid();
 
-        for (int row = 0; row < grid.getNumRows(); row++)
+        for (int row = 0; row < 30; row++)
         {
-            for (int col = 0; col < grid.getNumRows(); col++)
+            for (int col = 0; col < 30; col++)
             {
                 Location coordinate = new Location(row, col);
                 double random = Math.random();
@@ -121,9 +114,9 @@ public class GameOfLife
 
             }
         }
+        world.show();
 
     }
-    
 
     /**
      * Generates the next generation based on the rules of the Game of Life and updates the grid
@@ -205,113 +198,6 @@ public class GameOfLife
     }
 
     /**
-     * Generates the next generation based on the rules of the Game of Life and updates the grid
-     * associated with the world for an unbounded grid
-     *
-     * @pre     the game has been initialized
-     * @post    the world has been populated with a new grid containing the next generation
-     * 
-     */
-    public void createNextGenerationUnbounded()
-    {
-        /** You will need to read the documentation for the World, Grid, and Location classes
-         *      in order to implement the Game of Life algorithm and leverage the GridWorld framework.
-         */
-
-        // create the grid, of the specified size, that contains Actors
-        Grid<Actor> grid = world.getGrid();
-
-        UnboundedGrid<Actor> newGrid = new UnboundedGrid<Actor>();
-        ActorWorld newWorld = new ActorWorld(newGrid);
-        /*
-         * !!! insert your Game of Life algorithm here...
-         */ 
-
-        // put into a new grid, not the current one
-        // check that there are no rocks exposed to the outside - increment rows and columns until you hit empty space
-        // which would return a null actor. Then check along the column/row one less from it for rocks.
-        // The grid should always be a rectangle.
-
-        int maxCols = 0;
-        int maxRows = 0;
-        Location testCoordinate = new Location(0, 0);
-
-        for (int row = 0; grid.get(testCoordinate) != null; row++)
-        {
-            testCoordinate = new Location (row + 1, 0);
-            if (grid.get(testCoordinate.getAdjacentLocation(Location.EAST)) == null && grid.get(testCoordinate) == rock)
-            {
-                maxRows = row + 1;
-            }
-        }
-
-        testCoordinate = new Location(0, 0);
-
-        for (int col = 0; grid.get(testCoordinate) != null; col++)
-        {
-            testCoordinate = new Location (0, col);
-            if (grid.get(testCoordinate.getAdjacentLocation(Location.SOUTH)) == null && grid.get(testCoordinate) == rock)
-            {
-                maxCols = col + 1;
-            }
-        }
-
-        // change bounds from 30 to whatever the maximum rows/columns are, given by the previous loop
-        for(int row = 0; row < maxRows; row++)
-        {
-            for(int col = 0; col < maxCols; col++)
-            {
-                /*
-                 * 1. check if cell is alive or dead
-                 * 2. check for number of alive cells around using getOccupiedAdjacentLocations
-                 * 3. do a switch/if statement for each case
-                 */
-                Location coordinate = new Location(row, col);
-                int rockCounter = 0;
-
-                //counting the rocks adjacent to that location
-                for (int i = 0; i <= grid.getNeighbors(coordinate).size() - 1; i++)
-                {
-                    if (grid.getNeighbors(coordinate).get(i) == rock)
-                    {
-                        rockCounter++;
-                    }
-                }
-                //algorithm
-
-                if (grid.get(coordinate) == rock)
-                {
-
-                    //count the number of rocks around it and do the algorithm that way instead
-                    if (rockCounter == 2 || rockCounter == 3)
-                    {
-                        newGrid.put(coordinate, rock);
-                    }
-                    else
-                    {
-                        newGrid.put(coordinate, bug);
-                    }
-                }
-                else if (grid.get(coordinate) == bug || grid.get(coordinate) == null)
-                {
-                    if (rockCounter == 3)
-                    {
-                        newGrid.put(coordinate, rock);
-                    }
-                    else
-                    {
-                        newGrid.put(coordinate, bug);
-                    }
-                }
-
-            }
-        }
-
-        world = newWorld;
-        world.show();
-    }
-
-    /**
      * Returns the actor at the specified row and column. Intended to be used for unit testing.
      *
      * @param   row the row (zero-based index) of the actor to return
@@ -370,6 +256,7 @@ public class GameOfLife
 
         }
         while (true);
+
     }
 
 }
